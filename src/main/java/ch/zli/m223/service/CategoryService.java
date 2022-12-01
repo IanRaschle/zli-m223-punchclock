@@ -7,36 +7,36 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import ch.zli.m223.model.Entry;
+import ch.zli.m223.model.Category;
 
 @ApplicationScoped
-public class EntryService {
+public class CategoryService {
     @Inject
     private EntityManager entityManager;
 
     @Transactional
-    public Entry createEntry(Entry entry) {
+    public Category createEntry(Category entry) {
         entityManager.persist(entry);
         return entry;
     }
 
-    public List<Entry> findAll() {
-        var query = entityManager.createQuery("FROM Entry", Entry.class);
+    public List<Category> findAll() {
+        var query = entityManager.createQuery("FROM Category", Category.class);
         return query.getResultList();
     }
 
     @Transactional
     public void deleteEntry(Long id) {
-        entityManager.remove(entityManager.find(Entry.class, id));
+        entityManager.remove(entityManager.find(Category.class, id));
     }
 
     @Transactional
-    public void updateEntity(Entry entry) {
+    public void updateEntity(Category entry) {
         entityManager.merge(entry);
     }
 
-    public Entry find(long id) {
-        return entityManager.find(Entry.class, id);
+    public Category find(long id) {
+        return entityManager.find(Category.class, id);
     }
 
 }
