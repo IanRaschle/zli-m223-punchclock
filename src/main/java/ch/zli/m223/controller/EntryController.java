@@ -3,6 +3,8 @@ package ch.zli.m223.controller;
 import java.util.List;
 
 import javax.annotation.processing.Generated;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -22,6 +24,7 @@ import ch.zli.m223.service.EntryService;
 
 @Path("/entries")
 @Tag(name = "Entries", description = "Handling of entries")
+@RolesAllowed("admin, user")
 public class EntryController {
 
     @Inject
@@ -30,6 +33,7 @@ public class EntryController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Index all Entries.", description = "Returns a list of all entries.")
+    @PermitAll
     public List<Entry> index() {
         return entryService.findAll();
     }

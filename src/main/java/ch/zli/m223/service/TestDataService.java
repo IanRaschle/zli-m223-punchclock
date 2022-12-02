@@ -2,6 +2,8 @@ package ch.zli.m223.service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +30,9 @@ public class TestDataService {
         entityManager.createNativeQuery("DELETE FROM entry").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM category").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM tag").executeUpdate();
+
+        //user
+        var user = new ApplicationUser("hanseuli_bra", null, "test");
 
         //categories
         var categoryA = new Category();
@@ -62,13 +67,23 @@ public class TestDataService {
         firstEntry.setTags(new HashSet<>(Arrays.asList(tagA, tagC)));
         firstEntry.setCheckIn(LocalDateTime.now().minusHours(2));
         firstEntry.setCheckOut(LocalDateTime.now().plusHours(1));
-        entityManager.persist(firstEntry);
+        firstEntry.setApplicationUser(user);
 
         var secondEntry = new Entry();
         secondEntry.setCategory(categoryA);
         secondEntry.setTags(Set.of(tagA));
         secondEntry.setCheckIn(LocalDateTime.now().minusHours(4));
         secondEntry.setCheckOut(LocalDateTime.now());
+        secondEntry.setApplicationUser(user);
+
+        Set<Entry> entries = new HashSet<>();
+        entries.add(firstEntry);
+        entries.add(secondEntry);
+
+        user.setEntries(entries);
+
+        entityManager.persist(user);
+        entityManager.persist(firstEntry);
         entityManager.persist(secondEntry);
     }
 

@@ -36,6 +36,10 @@ public class Entry {
   @ManyToOne
   private Category category;
 
+  @ManyToOne
+  @JsonIgnoreProperties("entries")
+  private ApplicationUser applicationUser;
+
   public Entry(LocalDateTime checkIn, LocalDateTime checkOut) {
     this.checkIn = checkIn;
     this.checkOut = checkOut;
@@ -74,21 +78,27 @@ public class Entry {
     this.checkOut = checkOut;
   }
 
-public Set<Tag> getTags() {
-    return tags;
-}
+  public Set<Tag> getTags() {
+      return tags;
+  }
 
-public void setTags(Set<Tag> tags) {
-    this.tags = tags;
-}
+  public void setTags(Set<Tag> tags) {
+      this.tags = tags;
+  }
 
-public Category getCategory() {
-    return category;
-}
+  public Category getCategory() {
+      return category;
+  }
 
-public void setCategory(Category category) {
-    this.category = category;
-}
+  public void setCategory(Category category) {
+      this.category = category;
+  }
 
-  
+  public ApplicationUser getApplicationUser() {
+    return applicationUser;
+  }
+
+  public void setApplicationUser(ApplicationUser applicationUser) {
+    this.applicationUser = applicationUser;
+  }
 }
